@@ -11,8 +11,13 @@ module.exports = function() {
 		return value
 	}
 
+	const remove = async (key) => {
+		delete cache[key]
+	}
+
 	return Object.freeze({
 		get,
-		set
+		set,
+		remove
 	});
 }

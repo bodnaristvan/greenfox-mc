@@ -11,8 +11,13 @@ module.exports = function() {
 		return value
 	}
 
+	const remove = async (key) => {
+		redis.del(key)
+	}
+
 	return Object.freeze({
 		get,
-		set
+		set,
+		remove
 	});
 }
