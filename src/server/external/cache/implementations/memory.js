@@ -6,7 +6,13 @@ module.exports = function() {
 
 	const get = async (key) => cache[key] || null
 
+	const set = async (key, value) => {
+		cache[key] = value
+		return value
+	}
+
 	return Object.freeze({
-		get
+		get,
+		set
 	});
 }
