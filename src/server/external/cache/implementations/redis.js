@@ -15,9 +15,14 @@ module.exports = function() {
 		redis.del(key)
 	}
 
+	const increment = async (key, amount) => {
+		return await redis.incrby(key, parseInt(amount, 10))
+	}
+
 	return Object.freeze({
 		get,
 		set,
-		remove
+		remove,
+		increment
 	});
 }
