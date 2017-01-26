@@ -20,7 +20,12 @@ export default function () {
 	});
 
 	this.Given(/^I increment cache key "([^"]*)" by "([^"]*)"$/, function (cacheKey, addedValue, callback) {
-		callback(null, 'pending');
+		this.context.cache.increment(cacheKey, addedValue).then(() => {
+			callback();
+		}, (err) => {
+		this.context.cacheError = err;
+			callback();
+		});
 	});
 
 	this.When(/^I request the key "([^"]*)"$/, function (testKey, callback) {
@@ -45,8 +50,8 @@ export default function () {
 		assert.strictEqual(parseInt(this.context.cacheResponse, 10), parseInt(response, 10), "Cache value does not match");
 	});
 
-	this.Then(/^I get an error response$/, function (callback) {
-		callback(null, 'pending');
+	this.Then(/^I get an error response$/, function () {
+		assert.instanceOf(this.context.cacheError, Error, 'Error getting error');
 	});
 
 }
