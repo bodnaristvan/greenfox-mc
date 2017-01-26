@@ -5,22 +5,25 @@ import { assert } from 'chai';
 export default function () {
 
 	this.Before(function () {
-		this.context.cache = this.container.get('cache');
+		// this.context.cache = this.container.get('cache');
 	});
 
 	this.Given(/^There's no such key as "([^"]*)"$/, function (key, callback) {
-		this.context.cache.remove(key);
+		const cache = this.container.get('cache');
+		cache.remove(key);
 		callback();
 	});
 
 	this.Given(/^I set cache key "([^"]*)" to "([^"]*)"$/, function (key, value, callback) {
-		this.context.cache.set(key, value).then(() => {
+		const cache = this.container.get('cache');
+		cache.set(key, value).then(() => {
 			callback();
 		}, callback);
 	});
 
 	this.Given(/^I increment cache key "([^"]*)" by "([^"]*)"$/, function (cacheKey, addedValue, callback) {
-		this.context.cache.increment(cacheKey, addedValue).then(() => {
+		const cache = this.container.get('cache');
+		cache.increment(cacheKey, addedValue).then(() => {
 			callback();
 		}, (err) => {
 		this.context.cacheError = err;
@@ -29,7 +32,8 @@ export default function () {
 	});
 
 	this.When(/^I request the key "([^"]*)"$/, function (testKey, callback) {
-		this.context.cache.get(testKey).then((cacheResponse) => {
+		const cache = this.container.get('cache');
+		cache.get(testKey).then((cacheResponse) => {
 				this.context.cacheResponse = cacheResponse;
 				callback();
 			},
