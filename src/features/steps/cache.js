@@ -41,12 +41,12 @@ export default function () {
 	});
 
 	this.Then(/^I get a null response$/, function () {
-		assert.strictEqual(this.context.cacheError, undefined, "Error getting cache key");
+		assert.notInstanceOf(this.context.cacheError, Error, "Error getting cache key");
 		assert.strictEqual(this.context.cacheResponse, null, "Response not null");
 	});
 
 	this.Then(/^I get a "([^"]*)" response$/, function (response) {
-		assert.isUndefined(this.context.cacheError, "Error getting cache key");
+		assert.notInstanceOf(this.context.cacheError, Error, "Error getting cache key");
 		assert.strictEqual(parseInt(this.context.cacheResponse, 10), parseInt(response, 10), "Cache value does not match");
 	});
 
