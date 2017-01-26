@@ -1,5 +1,8 @@
 'use strict'
 
+import atoint from '../executors/atoint'
+import incrementBy from '../executors/incrementby';
+
 module.exports = function() {
 
 	const cache = {}
@@ -15,9 +18,16 @@ module.exports = function() {
 		delete cache[key]
 	}
 
+	const increment = async (key, amount) => {
+		const origValue = await get(key) || 0
+		const newVal = incrementBy(atoint(origValue), atoint(amount))
+		return set(key, newVal)
+	}
+
 	return Object.freeze({
 		get,
 		set,
-		remove
+		remove,
+		increment
 	});
 }
