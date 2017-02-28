@@ -7,11 +7,12 @@ import VError from 'verror';
 function MemoryCache () {
   let cache = {};
 
-  function get(key, defaultValue) {
-    return _.get(cache, key, defaultValue);
+  async function get(key, defaultValue) {
+    const result = _.get(cache, key, defaultValue);
+    return Promise.resolve(parseInt(result));
   }
 
-  function increment(key, amount) {
+  async function increment(key, amount) {
     validate.string(
       key,
       new VError(`[Cache] You have to use string as a key, got "${key}" (${typeof key})`)
@@ -22,10 +23,10 @@ function MemoryCache () {
         `[Cache] Can not increment key "${key}" with not a number value: ${amount}`
       )
     );
-    _.set(cache, key, get(key, 0) + amount);
+    _.set(cache, key, await get(key, 0) + amount);
   }
 
-  function flushAll() {
+  async function flushAll() {
     cache = {};
   }
 
