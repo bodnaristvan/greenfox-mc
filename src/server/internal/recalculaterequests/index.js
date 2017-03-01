@@ -5,7 +5,7 @@ function RecalculateRequests(cache, store) {
     }
 
     async function incrementCache(number) {
-        return cache.increment('totalRequestCount', number);
+        return cache.increment('totalIncomingRequests', number);
     }
 
     async function getRequestsCount() {
