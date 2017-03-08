@@ -1,5 +1,5 @@
 
-function RequestMonitor(store) {
+function RequestMonitor(queue, store) {
 
   async function registerIncomingRequest(url, params, time) {
     const request = await store.getSchema('Request');
@@ -11,6 +11,7 @@ function RequestMonitor(store) {
       }`,
       {url}
     );
+    queue.publish('add_request_stat', {url});
   }
 
   async function getRequests() {
@@ -25,6 +26,6 @@ function RequestMonitor(store) {
   });
 }
 
-RequestMonitor.deps = ['store'];
+RequestMonitor.deps = ['queue', 'store'];
 
 module.exports = RequestMonitor;
