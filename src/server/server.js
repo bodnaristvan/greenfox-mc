@@ -18,8 +18,8 @@ app.use(async (req, res, next) => {
 );
 
 app.use('/stats', async (req, res, next) => {
-  const monitor = container.get('requeststats');
-  const result = await monitor.getStatistics()
+  const stats = container.get('requeststats');
+  const result = await stats.getStatistics()
   res.send(result);
 });
 
