@@ -1,5 +1,5 @@
 
-function RequestStats(cache, requestmonitor) {
+function RequestStats(cache, requestmonitor, queue) {
 
   async function getStatistics() {
     return {
@@ -17,12 +17,19 @@ function RequestStats(cache, requestmonitor) {
     );
   }
 
+  function processQueuedMessages() {
+    queue.consume('add_request_stat', async function () {
+        await cache.increment('totalIncomingRequests', 1);
+    });
+  }
+
   return Object.freeze({
     getStatistics,
-    recalculate
+    recalculate,
+    processQueuedMessages
   });
 }
 
-RequestStats.deps = ['cache', 'requestmonitor'];
+RequestStats.deps = ['cache', 'requestmonitor', 'queue'];
 
 module.exports = RequestStats;
