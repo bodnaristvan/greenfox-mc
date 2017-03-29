@@ -1,5 +1,6 @@
 import validate from '../lib/validate';
 import VError from 'verror';
+import postBodyParser from '../lib/postBodyParser';
 
 export function validateModel({headline, id, body}) {
 	validate.string(
@@ -17,6 +18,6 @@ export class PostModel {
 	constructor({headline, id, body}) {
 		this.headline = headline;
 		this.id = id;
-		this.body = body;
+		this.body = postBodyParser(body);
 	}
 }
