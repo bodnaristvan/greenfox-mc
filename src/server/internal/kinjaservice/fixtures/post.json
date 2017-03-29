@@ -1,0 +1,10 @@
+{
+	"meta": {
+		"error": null
+	},
+	"data": {
+		"id": 123,
+		"headline": "hello world",
+		"body": []
+	}
+}
