@@ -11,6 +11,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 
+import Kinja from '../shared/components/kinja';
+
 injectTapEventPlugin();
 
 function App(Root, Admin, StoreService, History) {
@@ -25,6 +27,7 @@ function App(Root, Admin, StoreService, History) {
         <Router history={history}>
           <Route path="/" component={Root} />
           <Route path="/admin" component={Admin} />
+          <Route path="/kinja" component={Kinja} />
         </Router>
       </MuiThemeProvider>
     </Provider>
