@@ -1,4 +1,8 @@
 import container from './container';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+
+import Kinja from '../shared/components/kinja';
 
 require('dotenv').config()
 const path = require('path');
@@ -22,6 +26,16 @@ app.use('/requests', async (req, res, next) => {
   const monitor = container.get('requestmonitor');
   const result = await monitor.getRequests();
   res.send(result);
+});
+
+app.get('/kinja/:postId', async (req, res) => {
+  const kinjaservice = container.get('kinjaservice');
+  try {
+      const post = await kinjaservice.getPost(req.params.postId);
+      res.send(renderToString(<Kinja post={post} />));
+  } catch(e) {
+      res.send('ERR: ' + e.message);
+  }
 });
 
 app.use('/stats', async (req, res, next) => {
